@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -7,29 +6,39 @@ export default function Home() {
   const [response, setResponse] = useState('');
 
   const handleLogin = async () => {
+    const url = 'https://api.zzirit.shop/api/auth/basic/login';
+    const requestBody = {
+      username: email,
+      password,
+    };
+
+    console.log('[요청 URL]', url);
+    console.log('[요청 바디]', requestBody);
+
     try {
-      const res = await fetch('https://api.zzirit.shop/api/auth/basic/login', {
-      // const res = await fetch('http://13.209.179.229:8080/api/auth/basic/login', {
+      const res = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // ← 중요: 쿠키 받아오기
-        body: JSON.stringify({
-          username: email,
-          password,
-        }),
+        credentials: 'include',
+        body: JSON.stringify(requestBody),
       });
-  
+
+      console.log('[응답 상태]', res.status);
+      const result = await res.text(); // JSON 아닌 경우 대비
+      console.log('[응답 내용]', result);
+
       if (res.ok) {
         setResponse('로그인 성공!');
       } else {
         setResponse('로그인 실패: ' + res.status);
       }
     } catch (error) {
+      console.log('[에러 발생]', error);
       setResponse('로그인 실패: ' + error);
     }
-  };  
+  };
 
   return (
     <div style={{ padding: 20 }}>
