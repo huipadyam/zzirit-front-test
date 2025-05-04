@@ -9,6 +9,7 @@ export default function Home() {
   const handleLogin = async () => {
     try {
       const res = await fetch('https://api.zzirit.shop/api/auth/basic/login', {
+      // const res = await fetch('http://13.209.179.229:8080/api/auth/basic/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,6 +50,17 @@ export default function Home() {
       <br />
       <button onClick={handleLogin}>로그인</button>
       <pre>{response}</pre>
+
+      <h2>소셜 로그인</h2>
+      <a href="http://api.zzirit.shop/oauth2/authorization/naver">
+        <button>네이버 로그인</button>
+      </a>
+      <a href="http://api.zzirit.shop/oauth2/authorization/google">
+        <button>구글 로그인</button>
+      </a>
+      <a href="http://api.zzirit.shop/oauth2/authorization/kakao">
+        <button>카카오 로그인</button>
+      </a>
     </div>
   );
 }
